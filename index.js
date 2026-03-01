@@ -58,17 +58,10 @@ if (!finalConfig.OPENCODE_PATH) {
 }
 
 // Check if opencode is available
-import { execSync } from 'child_process';
-try {
-    execSync(`"${finalConfig.OPENCODE_PATH}" --version`, { stdio: 'ignore' });
-} catch (e) {
-    console.warn(`[Warning] Cannot verify OpenCode installation: ${finalConfig.OPENCODE_PATH}`);
-    console.warn('[Warning] Please ensure OpenCode is installed:');
-    console.warn('  Windows: npm install -g opencode-ai');
-    console.warn('  Linux/macOS: curl -fsSL https://opencode.ai/install | bash');
-    console.warn('[Warning] Or specify the full path in config.json:');
-    console.warn('  { "OPENCODE_PATH": "C:\\\\Users\\\\YourName\\\\AppData\\\\Roaming\\\\npm\\\\opencode.cmd" }');
-}
+// Check if opencode is available
+// Note: Removed synchronous execSync check to avoid shell issues in sandboxed environments
+// The actual availability will be checked when the proxy tries to use it
+// If opencode is not available, the proxy will fail at runtime with a clear error
 
 console.log('[Config] Starting with configuration:');
 console.log(`  - Port: ${finalConfig.PORT}`);
